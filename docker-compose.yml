@@ -81,7 +81,7 @@ services:
       - WEBUI_PORT=5080
     volumes:
       - qbittorrent-config:/config
-      - torrent-downloads:/downloads
+      - /mnt/downloads:/mnt/downloads
 
     ## Comment/Disable below ports if VPN is enabled
     ports:
@@ -107,7 +107,8 @@ services:
       - 7878:7878
     volumes:
       - radarr-config:/config
-      - torrent-downloads:/downloads
+      - /mnt/downloads:/mnt/downloads
+      - /mnt/movies:/mnt/movies
     restart: "unless-stopped"
 
   sonarr:
@@ -125,7 +126,8 @@ services:
       - TZ=UTC
     volumes:
       - sonarr-config:/config
-      - torrent-downloads:/downloads
+      - /mnt/downloads:/mnt/downloads
+      - /mnt/series:/mnt/series
     ports:
       - 8989:8989
     restart: unless-stopped
@@ -183,7 +185,9 @@ services:
       - TZ=UTC
     volumes:
       - jellyfin-config:/config
-      - torrent-downloads:/data
+      - /mnt/downloads:/mnt/downloads
+      - /mnt/movies:/mnt/movies
+      - /mnt/series:/mnt/series
   # devices:
    #  - /dev/videoN:/dev/videoN # Mount GPU device 
     ports:
