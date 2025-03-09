@@ -165,7 +165,7 @@ services:
       - mynetwork
     environment:
       - PUID=1000
-      - PGID=1000
+      - PGID=1001
       - TZ=UTC
     volumes:
       - jellyseerr-config:/app/config
@@ -183,6 +183,8 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=UTC
+      - NVIDIA_DRIVER_CAPABILITIES=all
+      - NVIDIA_VISIBLE_DEVICES=all
     volumes:
       - jellyfin-config:/config
       - /mnt/downloads:/mnt/downloads
@@ -190,6 +192,14 @@ services:
       - /mnt/series:/mnt/series
   # devices:
    #  - /dev/videoN:/dev/videoN # Mount GPU device 
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [video]
     ports:
       - 8096:8096
       - 7359:7359/udp
